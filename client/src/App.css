@@ -21,7 +21,7 @@
 
 .logo-container{
   pointer-events: none;
-  position: fixed;
+  position: absolute;
   margin-top: 325px;
   left: 46%; 
   transform: translate(-50%, -50%);
@@ -42,7 +42,7 @@
   height: 650px;
   width: 650px;
   border-radius: 100%;
-  position: fixed;
+  position: absolute;
   margin-top: 325px;
   left: 50%; 
   transform: translate(-50%, -50%);
