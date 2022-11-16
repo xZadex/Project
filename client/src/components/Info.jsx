@@ -5,13 +5,12 @@ import axios from 'axios'
 const Info = () => {
     useEffect(() => {
         // axios call here
-        axios("http://localhost:8000/getList")
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        axios("http://localhost:8000/getTop100")
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        axios("http://localhost:8000/getAllGames")
+            .then(res => console.log(res.data))
+            .catch(err => console.error(err))
     }, [])
 
     return (
