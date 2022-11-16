@@ -36,8 +36,8 @@ const Info = () => {
             <div className='logo-container'>
             <svg id="steam-logo" width="794" height="555" viewBox="0 0 794 555" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="627.735" cy="166.089" r="80.1339" fill="white" />
-                <circle cx="627.274" cy="166.549" r="133.755" stroke="white" stroke-width="65" />
-                <circle cx="357.398" cy="435.504" r="101.28" stroke="white" stroke-width="36" />
+                <circle cx="627.274" cy="166.549" r="133.755" stroke="white" strokeWidth="65" />
+                <circle cx="357.398" cy="435.504" r="101.28" stroke="white" strokeWidth="36" />
                 <path d="M364.867 316.61L461.497 174.363L618.985 331.883L475.402 434.963L364.867 316.61Z" fill="white" />
                 <path d="M416.881 462.131C402.775 495.932 362.635 511.353 327.226 496.575C291.818 481.797 274.55 442.417 288.656 408.616C302.763 374.816 342.903 359.395 378.312 374.172C413.72 388.95 430.988 428.331 416.881 462.131Z" fill="white" />
                 <path d="M-3.69197 214.742L378.312 374.172L327.226 496.575L-54.7772 337.145L-3.69197 214.742Z" fill="white" />
