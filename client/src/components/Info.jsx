@@ -46,7 +46,7 @@ const Info = () => {
             {
                 top10?.map((game, i) => {
                     return (
-                        <div key={i} className="box text-center" style={{ color: `rgb(255,255,255)`, height: 0.00050 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
+                        <div key={i} className="box text-center" style={{ color: `rgb(255,255,255)`,width: "1000px", height: 0.00050 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
                     )
                 })
             }
