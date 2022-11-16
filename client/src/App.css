@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 *{
   margin: 0;
   padding: 0;
@@ -12,7 +14,7 @@
   flex-direction: column;
   align-items: center;
   height: 650px;
-  margin-top: 5em;
+  margin-top: 8.5em;
   clip-path: circle(325px at center);
   overflow: hidden;
 }
@@ -29,10 +31,38 @@
 
 
 #steam-logo{
-  height: 400px;
+  height: 450px;
+  opacity: 50%;
 }
 
-#steam-logo:hover{
-  z-index: 10000;
-  opacity: 50%;
+
+.glow{
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 55px 10px #0B73EA;
+  height: 650px;
+  width: 650px;
+  border-radius: 100%;
+  position: fixed;
+  margin-top: 325px;
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  animation-name: glowing;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+}
+
+@keyframes glowing {
+  0%   {box-shadow: 0px 0px 35px 5px #0b73ea81}
+  100%   {box-shadow: 0px 0px 90px 10px #0B73EA} 
+}
+
+.all-games{
+  color: rgba(117, 117, 117, 0.534);
+  margin-top: 3em;
+  font-size: 1.5em;
+  font-family: 'Montserrat', sans-serif;
 }
