@@ -3,8 +3,8 @@ import axios from 'axios'
 import Info from '../components/Info'
 const Main = () => {
     const [allgamecount, setAllGameCount] = useState("");
+    const [loaded, setLoaded] = useState(false);
 
-    const [loaded, setLoaded] = useState(false)
     useEffect(() => {
         // axios call here
         axios("http://localhost:8000/getAllGames")
