@@ -18,3 +18,13 @@ module.exports.getAllGames = (req, res) => {
         }
     })
 }
+
+module.exports.getAllStreams = (req, res) => {
+    const request = require('request');
+    const url = "https://api.twitch.tv/helix/streams";
+    request(url, function(err, response, body){
+        if(!err & response.statusCode < 400){
+            res.send(body);
+        }
+    })
+}

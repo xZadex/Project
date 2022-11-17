@@ -5,6 +5,8 @@ import axios from 'axios'
 const Info = () => {
     const [topgames, setTopGames] = useState(null);
     const [allgames, setAllGames] = useState(null);
+    const [topstreams, setTopStreams] = useState(null);
+
 
     useEffect(() => {
         // axios call here
@@ -13,14 +15,21 @@ const Info = () => {
             .catch(err => console.log(err));
         axios("http://localhost:8000/getAllGames")
             .then(res => setAllGames(res.data.applist.apps.app))
-            .catch(err => console.error(err))
+            .catch(err => console.error(err));
+        axios.get(`https://api.twitch.tv/helix/search/channels?query=just%20chatting&live_only=true`, {
+            headers: {
+                'Authorization': 'Bearer 5mbkwxc8pn51auic3lhklmoli0iyy0',
+                'Client-Id': '4a1zik3w9q51rqcwa9hjxyzp10lun8',
+            }
+        })
+        .then(res => console.log(res.data.data))
+        .catch(err => console.error(err));
     }, [])
 
     topgames?.map(object => object["name"] = allgames?.filter(obj => {
         return obj.appid === object.appid
     }).map(obj => obj.name)[0])
 
-    console.log(topgames);
 
 
     let top10 = []
