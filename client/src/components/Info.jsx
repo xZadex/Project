@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 
-const Info = () => {
+const Info = (props) => {
+    const {handleHoverOn, handleHoverOff, setTop10Main} = props;
     const [topgames, setTopGames] = useState(null);
     const [allgames, setAllGames] = useState(null);
     const [selectedGame, setSelectedGame] = useState({
@@ -73,27 +74,28 @@ const Info = () => {
         setGameSelected(false)
     }
 
+    
     return (
         <div className='box-container'>
 
             {
                 (gameSelected === true)
-                    ? <div className='game-info-container'>
-                        <h1 className='game-title'>{selectedGame.name}</h1>
-                        <div>
-                            <p><strong>Rank:</strong> {selectedGame.rank}</p>
-                            <p><strong>Current Active Players:</strong> {selectedGame.concurrent_in_game}</p>
-                            <p><strong>Peak Daily Active Players:</strong> {selectedGame.peak_in_game}</p>
-                        </div>
-                        <h2 className='twitch-header'>Live Twitch Streams</h2>
-                        <div className='thumbnail-container'>
-                            <div className='img-01'></div>
-                            <div className='img-01'></div>
-                            <div className='img-01'></div>
-                        </div>
-                        <button className='close-button' onClick={handleHide}>✖</button>
+                ?<div className='game-info-container'>
+                    <h1 className='game-title'>{selectedGame.name}</h1>
+                    <div>
+                        <p><strong>Rank:</strong> {selectedGame.rank}</p>
+                        <p><strong>Current Active Players:</strong> {selectedGame.concurrent_in_game.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
+                        <p><strong>Peak Daily Active Players:</strong> {selectedGame.peak_in_game.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                     </div>
-                    : <></>
+                    <h2 className='twitch-header'>Live Twitch Streams</h2>
+                    <div className='thumbnail-container'>
+                        <div className='img-01'></div>
+                        <div className='img-01'></div>
+                        <div className='img-01'></div>
+                    </div>
+                    <button className='close-button' onClick={handleHide}>X</button>
+                </div>
+                :<></>
             }
             <div className='logo-container'>
                 <svg id="steam-logo" width="794" height="555" viewBox="0 0 794 555" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +110,7 @@ const Info = () => {
             {
                 top10?.map((game, i) => {
                     return (
-                        <div key={i} className="box text-center" onClick={(event) => handleClick(event, i)} style={{ color: `rgb(255,255,255)`, width: "1000px", height: 0.00050 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
+                        <div key={i} className="box text-center" onClick={(event) => handleClick(event, i)} onMouseEnter={(event) => {handleHoverOn(event, i);setTop10Main(top10)}} onMouseLeave={(event) => handleHoverOff(event, i)} style={{ color: `rgb(255,255,255)`,width: "1000px", height: 0.00050 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
                     )
                 })
             }
