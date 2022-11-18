@@ -35,7 +35,8 @@ const Main = () => {
             hoverInfo.style.left = e.pageX + 'px';
             hoverInfo.style.top = e.pageY + -150 +'px';
             }
-            document.addEventListener('mousemove', onMouseMove);
+            let steam_container = document.getElementById('box-container')
+            steam_container.addEventListener('mousemove', onMouseMove);
         }
     }
     const handleHoverOff = (event, i) => {

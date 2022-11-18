@@ -23,7 +23,7 @@ const Info = (props) => {
                 let response = res.data.response.ranks
                 let filtered = response.filter(list => list.appid !== 431960)
                 console.log(filtered)
-                setTopGames(filtered)
+                setTopGames(response)
                 // console.log(res.data.response.ranks)
             })
             .catch(err => console.log(err));
@@ -84,9 +84,9 @@ const Info = (props) => {
         setGameSelected(false)
     }
 
-
+    console.log(twitchList)
     return (
-        <div className='box-container'>
+        <div className='box-container' id='box-container'>
 
             {
                 (gameSelected === true)
@@ -102,9 +102,21 @@ const Info = (props) => {
                             {
                                 (twitchList)
                                 ?<div className='link-list'>
-                                    <a href={`https://www.twitch.tv/${twitchList[0].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[0].thumbnail_url} alt="" /></a>
-                                    <a href={`https://www.twitch.tv/${twitchList[1].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[1].thumbnail_url} alt="" /></a>
-                                    <a href={`https://www.twitch.tv/${twitchList[2].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[2].thumbnail_url} alt="" /></a>
+                                    {
+                                    (twitchList[0])
+                                    ?<a href={`https://www.twitch.tv/${twitchList[0].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[0].thumbnail_url} alt="" /></a>
+                                    :<div>No streamer at this moment...</div>
+                                    }
+                                    {
+                                    (twitchList[1])
+                                    ?<a href={`https://www.twitch.tv/${twitchList[1].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[1].thumbnail_url} alt="" /></a>
+                                    :""
+                                    }
+                                    {
+                                    (twitchList[2])
+                                    ?<a href={`https://www.twitch.tv/${twitchList[2].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[2].thumbnail_url} alt="" /></a>
+                                    :""
+                                    }
                                 </div>
                                 :<></>
                             }
