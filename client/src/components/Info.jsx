@@ -14,12 +14,18 @@ const Info = (props) => {
         rank: ''
     })
     const [gameSelected, setGameSelected] = useState(false)
-    const [twitchList, setTwitchList] = useState([])
+    const [twitchList, setTwitchList] = useState(null)
 
     useEffect(() => {
         // axios call here
         axios("http://localhost:8000/getTop100")
-            .then(res => setTopGames(res.data.response.ranks))
+            .then(res => {
+                let response = res.data.response.ranks
+                let filtered = response.filter(list => list.appid !== 431960)
+                console.log(filtered)
+                setTopGames(filtered)
+                // console.log(res.data.response.ranks)
+            })
             .catch(err => console.log(err));
         axios("http://localhost:8000/getAllGames")
             .then(res => setAllGames(res.data.applist.apps.app))
@@ -30,6 +36,7 @@ const Info = (props) => {
         return obj.appid === object.appid
     }).map(obj => obj.name)[0])
 
+    
 
     let top10 = []
 
@@ -39,38 +46,39 @@ const Info = (props) => {
         }
     }
 
-
-    const handleClick = (event, i) => {
-        let url = ""
-        if (top10.length > 0 && top10[i].name) {
-            let stringName = top10[i].name
-            stringName += "_"
-            let stringFormat = stringName.replace(/[^a-z^0-9^.]/gi, "%20").toLowerCase()
-            stringFormat = stringFormat.replace(/[0-9]\.[0-9]/gi, "")
-            url = `https://api.twitch.tv/helix/search/channels?query=${stringFormat}&live_only=true`
+    const handleClick  = (event, i) => {
+            let url = ""
+            if (top10.length > 0 && top10[i].name) {
+                let stringName = top10[i].name
+                stringName += "_"
+                let stringFormat = stringName.replace(/[^a-z^0-9^.]/gi, "%20").toLowerCase()
+                stringFormat = stringFormat.replace(/[0-9]\.[0-9]/gi, "")
+                url = `https://api.twitch.tv/helix/search/channels?query=${stringFormat}&live_only=true`
+            }
+    
+                axios.get(url, {
+                    headers: {
+                        'Authorization': 'Bearer 5mbkwxc8pn51auic3lhklmoli0iyy0',
+                        'Client-Id': '4a1zik3w9q51rqcwa9hjxyzp10lun8',
+                    }
+                })
+                    .then(res => {
+                        setTwitchList(res.data.data)
+                        console.log(twitchList)
+                    })
+                    .catch(err => console.error(err))
+    
+                setSelectedGame({
+                    appid: top10[i].appid,
+                    concurrent_in_game: top10[i].concurrent_in_game,
+                    name: top10[i].name,
+                    peak_in_game: top10[i].peak_in_game,
+                    rank: top10[i].rank
+                })
+                console.log(selectedGame.name)
+                setGameSelected(true)
         }
 
-        axios.get(url, {
-            headers: {
-                'Authorization': 'Bearer 5mbkwxc8pn51auic3lhklmoli0iyy0',
-                'Client-Id': '4a1zik3w9q51rqcwa9hjxyzp10lun8',
-            }
-        })
-            .then(res => {
-                setTwitchList([res.data.data[0],res.data.data[1],res.data.data[2]])
-                console.log(res.data.data[0].display_name)
-            })
-            .catch(err => console.error(err))
-
-        setSelectedGame({
-            appid: top10[i].appid,
-            concurrent_in_game: top10[i].concurrent_in_game,
-            name: top10[i].name,
-            peak_in_game: top10[i].peak_in_game,
-            rank: top10[i].rank
-        })
-        setGameSelected(true)
-    };
 
     const handleHide = () => {
         setGameSelected(false)
@@ -89,11 +97,17 @@ const Info = (props) => {
                             <p><strong>Current Active Players:</strong> {selectedGame.concurrent_in_game.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p><strong>Peak Daily Active Players:</strong> {selectedGame.peak_in_game.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                         </div>
-                        <h2 className='twitch-header'>Live Twitch Streams</h2>
+                        <h2 className='twitch-header'>Streamers Live on Twitch</h2>
                         <div className='thumbnail-container'>
-                            <div className='img-01'></div>
-                            <div className='img-01'></div>
-                            <div className='img-01'></div>
+                            {
+                                (twitchList)
+                                ?<div className='link-list'>
+                                    <a href={`https://www.twitch.tv/${twitchList[0].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[0].thumbnail_url} alt="" /></a>
+                                    <a href={`https://www.twitch.tv/${twitchList[1].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[1].thumbnail_url} alt="" /></a>
+                                    <a href={`https://www.twitch.tv/${twitchList[2].display_name}`} target="_blank" rel="noreferrer"><img className="thumbnail-image" src={twitchList[2].thumbnail_url} alt="" /></a>
+                                </div>
+                                :<></>
+                            }
                         </div>
                         <button className='close-button' onClick={handleHide}>X</button>
                     </div>

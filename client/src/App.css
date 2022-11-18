@@ -129,7 +129,7 @@ body{
 }
 
 .twitch-header{
-  font-size: 2em;
+  font-size: 1.8em;
   margin: .5em 0 1em 0;
 }
 
@@ -168,6 +168,19 @@ body{
   overflow: hidden;
 }
 
-.test{
-  overflow: hidden;
+.link-list{
+  display: flex;
+  gap: 1em;
+  margin-bottom: 2em;
+}
+
+.thumbnail-image{
+  height: 80px;
+  border-radius: 10px;
+  transition: 200ms;
+}
+
+.thumbnail-image:hover{
+  transform: scale(110%);
+  box-shadow: 0px 0px 5px 2px #0B73EA;
 }
