@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 
 const Info = (props) => {
-    const {handleHoverOn, handleHoverOff, setTop10Main} = props;
+    const { handleHoverOn, handleHoverOff, setTop10Main } = props;
     const [topgames, setTopGames] = useState(null);
     const [allgames, setAllGames] = useState(null);
     const [selectedGame, setSelectedGame] = useState({
@@ -14,7 +14,7 @@ const Info = (props) => {
         rank: ''
     })
     const [gameSelected, setGameSelected] = useState(false)
-
+    const [twitchList, setTwitchList] = useState([])
 
     useEffect(() => {
         // axios call here
@@ -23,14 +23,6 @@ const Info = (props) => {
             .catch(err => console.log(err));
         axios("http://localhost:8000/getAllGames")
             .then(res => setAllGames(res.data.applist.apps.app))
-            .catch(err => console.error(err));
-        axios.get(`https://api.twitch.tv/helix/search/channels?query=just%20chatting&live_only=true`, {
-            headers: {
-                'Authorization': 'Bearer 5mbkwxc8pn51auic3lhklmoli0iyy0',
-                'Client-Id': '4a1zik3w9q51rqcwa9hjxyzp10lun8',
-            }
-        })
-            .then(res => console.log(res.data.data))
             .catch(err => console.error(err));
     }, [])
 
@@ -48,18 +40,28 @@ const Info = (props) => {
     }
 
 
-    if (top10.length > 0 && top10[0].name) {
-        let stringName = top10[0].name
-        stringName += "_"
-        let stringFormat = stringName.replace(/[^a-z^0-9^.]/gi, "%20").toLowerCase()
-        console.log(stringFormat)
-        stringFormat = stringFormat.replace(/[0-9]\.[0-9]/gi,"")
-        const url = `https://api.twitch.tv/helix/search/channels?query=${stringFormat}&live_only=true`
-        console.log(url)
-    }
-
-
     const handleClick = (event, i) => {
+        let url = ""
+        if (top10.length > 0 && top10[i].name) {
+            let stringName = top10[i].name
+            stringName += "_"
+            let stringFormat = stringName.replace(/[^a-z^0-9^.]/gi, "%20").toLowerCase()
+            stringFormat = stringFormat.replace(/[0-9]\.[0-9]/gi, "")
+            url = `https://api.twitch.tv/helix/search/channels?query=${stringFormat}&live_only=true`
+        }
+
+        axios.get(url, {
+            headers: {
+                'Authorization': 'Bearer 5mbkwxc8pn51auic3lhklmoli0iyy0',
+                'Client-Id': '4a1zik3w9q51rqcwa9hjxyzp10lun8',
+            }
+        })
+            .then(res => {
+                setTwitchList([res.data.data[0],res.data.data[1],res.data.data[2]])
+                console.log(res.data.data[0].display_name)
+            })
+            .catch(err => console.error(err))
+
         setSelectedGame({
             appid: top10[i].appid,
             concurrent_in_game: top10[i].concurrent_in_game,
@@ -74,28 +76,28 @@ const Info = (props) => {
         setGameSelected(false)
     }
 
-    
+
     return (
         <div className='box-container'>
 
             {
                 (gameSelected === true)
-                ?<div className='game-info-container'>
-                    <h1 className='game-title'>{selectedGame.name}</h1>
-                    <div>
-                        <p><strong>Rank:</strong> {selectedGame.rank}</p>
-                        <p><strong>Current Active Players:</strong> {selectedGame.concurrent_in_game.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
-                        <p><strong>Peak Daily Active Players:</strong> {selectedGame.peak_in_game.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
+                    ? <div className='game-info-container'>
+                        <h1 className='game-title'>{selectedGame.name}</h1>
+                        <div>
+                            <p><strong>Rank:</strong> {selectedGame.rank}</p>
+                            <p><strong>Current Active Players:</strong> {selectedGame.concurrent_in_game.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
+                            <p><strong>Peak Daily Active Players:</strong> {selectedGame.peak_in_game.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
+                        </div>
+                        <h2 className='twitch-header'>Live Twitch Streams</h2>
+                        <div className='thumbnail-container'>
+                            <div className='img-01'></div>
+                            <div className='img-01'></div>
+                            <div className='img-01'></div>
+                        </div>
+                        <button className='close-button' onClick={handleHide}>X</button>
                     </div>
-                    <h2 className='twitch-header'>Live Twitch Streams</h2>
-                    <div className='thumbnail-container'>
-                        <div className='img-01'></div>
-                        <div className='img-01'></div>
-                        <div className='img-01'></div>
-                    </div>
-                    <button className='close-button' onClick={handleHide}>X</button>
-                </div>
-                :<></>
+                    : <></>
             }
             <div className='logo-container'>
                 <svg id="steam-logo" width="794" height="555" viewBox="0 0 794 555" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +112,7 @@ const Info = (props) => {
             {
                 top10?.map((game, i) => {
                     return (
-                        <div key={i} className="box text-center" onClick={(event) => handleClick(event, i)} onMouseEnter={(event) => {handleHoverOn(event, i);setTop10Main(top10)}} onMouseLeave={(event) => handleHoverOff(event, i)} style={{ color: `rgb(255,255,255)`,width: "1000px", height: 0.00050 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
+                        <div key={i} className="box text-center" onClick={(event) => handleClick(event, i)} onMouseEnter={(event) => { handleHoverOn(event, i); setTop10Main(top10) }} onMouseLeave={(event) => handleHoverOff(event, i)} style={{ color: `rgb(255,255,255)`, width: "1000px", height: 0.00050 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
                     )
                 })
             }

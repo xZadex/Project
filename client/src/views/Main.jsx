@@ -12,8 +12,6 @@ const Main = () => {
         rank:""
     })
     const [top10main, setTop10Main] = useState([])
-
-    const [loaded, setLoaded] = useState(false)
     useEffect(() => {
         // axios call here
         axios("http://localhost:8000/getAllGames")
