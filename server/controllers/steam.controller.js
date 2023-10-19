@@ -4,6 +4,7 @@ module.exports.getTop100Games = (req, res) => {
     request(url, function(err, response, body){
         if(!err && response.statusCode < 400){
             // console.log(body);
+            res.header('Access-Control-Allow-Origin', 'https://steame.vercel.app');
             res.send(body);
         }
     })
@@ -14,6 +15,7 @@ module.exports.getAllGames = (req, res) => {
     const url = "https://api.steampowered.com/ISteamApps/GetAppList/v1/";
     request(url, function(err, response, body){
         if(!err & response.statusCode < 400){
+            res.header('Access-Control-Allow-Origin', 'https://steame.vercel.app');
             res.send(body);
         }
     })
@@ -24,6 +26,7 @@ module.exports.getAllStreams = (req, res) => {
     const url = "https://api.twitch.tv/helix/streams";
     request(url, function(err, response, body){
         if(!err & response.statusCode < 400){
+            res.header('Access-Control-Allow-Origin', 'https://steame.vercel.app');
             res.send(body);
         }
     })
