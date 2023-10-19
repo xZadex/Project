@@ -1,3 +1,9 @@
+module.exports.index = (req, res) => {
+    res.json({
+        message: "Hello SteaMe"
+    });
+}
+
 module.exports.getTop100Games = (req, res) => {
     const request = require('request');
     const url = "https://api.steampowered.com/ISteamChartsService/GetGamesByConcurrentPlayers/v1/";
