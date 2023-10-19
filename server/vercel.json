@@ -7,6 +7,10 @@
         {
             "src": "/(.*)",
             "dest": "*.js"
+        },
+        {
+            "src": "/api/top100Games",
+            "dest": "api/top100Games.js"
         }
     ]
 }
