@@ -16,7 +16,7 @@ const Main = () => {
     // axios.defaults.withCredentials = true;
     useEffect(() => {
         // axios call here
-        axios("https://steam-project-three.vercel.app/getAllGames")
+        axios("https://steame-backend.onrender.com/getAllGames")
             .then(res => {
                 setAllGameCount(res.data.applist.apps.app.length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
                 setLoaded(true)

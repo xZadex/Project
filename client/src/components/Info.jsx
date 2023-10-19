@@ -22,8 +22,8 @@ const Info = ({ handleHoverOn, handleHoverOff, setTop10Main }) => {
         const fetchData = async () => {
             try {
                 const [topGamesResponse, allGamesResponse] = await Promise.all([
-                    axios('https://steam-project-three.vercel.app/getTop100'),
-                    axios('https://steam-project-three.vercel.app/getAllGames'),
+                    axios('https://steame-backend.onrender.com/getTop100'),
+                    axios('https://steame-backend.onrender.com/getAllGames'),
                 ]);
 
                 const filteredTopGames = topGamesResponse.data.response.ranks.filter(list => list.appid !== 431960);
