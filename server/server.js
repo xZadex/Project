@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const port = 8000;
 
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 app.use(cors(
     {
         origin: ["https://steame.vercel.app"],
@@ -10,8 +12,6 @@ app.use(cors(
         credentials: true
     }
 ));
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
 
 require('./routes/steam.routes')(app);
 

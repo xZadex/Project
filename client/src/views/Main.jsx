@@ -13,7 +13,7 @@ const Main = () => {
     })
     const [top10main, setTop10Main] = useState([])
 
-    axios.defaults.withCredentials = true;
+    // axios.defaults.withCredentials = true;
     useEffect(() => {
         // axios call here
         axios("https://steam-project-three.vercel.app/getAllGames")

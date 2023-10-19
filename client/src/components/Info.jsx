@@ -17,7 +17,7 @@ const Info = ({ handleHoverOn, handleHoverOff, setTop10Main }) => {
         twitchList: null,
     });
     
-    axios.defaults.withCredentials = true;
+    // axios.defaults.withCredentials = true;
     useEffect(() => {
         const fetchData = async () => {
             try {
