@@ -16,13 +16,14 @@ const Info = ({ handleHoverOn, handleHoverOff, setTop10Main }) => {
         gameSelected: false,
         twitchList: null,
     });
-
+    
+    axios.defaults.withCredentials = true;
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [topGamesResponse, allGamesResponse] = await Promise.all([
-                    axios('http://localhost:8000/getTop100'),
-                    axios('http://localhost:8000/getAllGames'),
+                    axios('https://steam-project-three.vercel.app/getTop100'),
+                    axios('https://steam-project-three.vercel.app/getAllGames'),
                 ]);
 
                 const filteredTopGames = topGamesResponse.data.response.ranks.filter(list => list.appid !== 431960);

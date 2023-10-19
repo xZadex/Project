@@ -5,7 +5,7 @@ const port = 8000;
 
 app.use(cors(
     {
-        origin: [""],
+        origin: ["https://steam-project-three.vercel.app"],
         methods:["POST", "GET"],
         credentials: true
     }

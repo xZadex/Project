@@ -12,9 +12,11 @@ const Main = () => {
         rank:""
     })
     const [top10main, setTop10Main] = useState([])
+
+    axios.defaults.withCredentials = true;
     useEffect(() => {
         // axios call here
-        axios("http://localhost:8000/getAllGames")
+        axios("https://steam-project-three.vercel.app/getAllGames")
             .then(res => {
                 setAllGameCount(res.data.applist.apps.app.length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
                 setLoaded(true)
