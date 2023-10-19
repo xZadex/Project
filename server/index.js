@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("Hello again SteaME!");
+    res.send("Hello again!");
 });
 
 app.listen(3001, () => {
