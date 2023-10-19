@@ -7,7 +7,6 @@ export default (req, res) => {
 
     request(url, (err, response, body) => {
         if (!err && response.statusCode < 400) {
-            res.setHeader('Access-Control-Allow-Origin', 'https://steame.vercel.app');
             res.status(200).send(body);
         } else {
             res.status(500).send('Internal Server Error');
