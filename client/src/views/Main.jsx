@@ -13,6 +13,7 @@ const Main = () => {
         rank: ""
     })
     const [top10main, setTop10Main] = useState([]);
+    const [onMobile, setOnMobile] = useState(window.innerWidth < 768);
 
     useEffect(() => {
 
@@ -71,11 +72,19 @@ const Main = () => {
                     <div className={`loading-screen`}></div>
             }
 
-            <div className='steam-logo-container'>
-                <div className='glow'></div>
-                <Info handleHoverOn={handleHoverOn} handleHoverOff={handleHoverOff} top10main={top10main} setTop10Main={setTop10Main} />
-                <p className='text-center all-games'>Current Number of Games Available: {allgamecount}</p>
-            </div>
+            {onMobile ? ( // Check if the user is on a mobile device
+                <div className="mobile-message">
+                    <p>Mobile site is still in progress.</p>
+                    <p>Please view our site on a desktop or laptop for the full experience!</p>
+                </div>
+            ) : (
+                // Display content for non-mobile users
+                <div className="steam-logo-container">
+                    <div className="glow"></div>
+                    <Info handleHoverOn={handleHoverOn} handleHoverOff={handleHoverOff} top10main={top10main} setTop10Main={setTop10Main} />
+                    <p className="text-center all-games">Current Number of Games Available: {allgamecount}</p>
+                </div>
+            )}
 
             {
                 (isHovered === true && top10main.length > 1)
