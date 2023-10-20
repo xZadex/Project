@@ -190,3 +190,39 @@ body {
   transform: scale(1.1);
   box-shadow: 0px 0px 5px 2px #0B73EA;
 }
+
+.loading-screen{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #141414;
+  opacity: 1;
+  transition: all 2s ease-in-out;
+  z-index: 1000;
+}
+
+.loading-screen::after{
+  content: "";
+  width: 75px;
+  height: 75px;
+  border: 15px solid #4b4b4b;
+  border-top-color: #0B73EA;
+  border-radius: 50%;
+  animation: loading 0.75s ease infinite;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+@keyframes loading {
+  from { transform: rotate(0turn)}
+  to { transform: rotate(1turn)}
+}

@@ -13,15 +13,15 @@ const Main = () => {
     })
     const [top10main, setTop10Main] = useState([])
 
-    // axios.defaults.withCredentials = true;
     useEffect(() => {
-        // axios call here
-        axios("https://steame-backend.onrender.com/getAllGames")
+        axios(`${process.env.REACT_APP_BACKEND}/getAllGames`)
             .then(res => {
                 setAllGameCount(res.data.applist.apps.app.length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
-                setLoaded(true)
             })
             .catch(err => console.error(err))
+        setTimeout(() => {
+            setLoaded(true);
+        }, 2000);
     }, [])
 
     const handleHoverOn = (event, i) => {
@@ -49,13 +49,18 @@ const Main = () => {
         <div style={{ background: "rgb(20,20,20)" }} className="test">
             {
                 (loaded)
-                ?<div>
+                ?
+                <div className={`loading-screen hidden`}></div>
+                :
+                <div className={`loading-screen`}></div>
+            }
+
+                <div>
                     <div className='glow'></div>
                     <Info handleHoverOn={handleHoverOn} handleHoverOff={handleHoverOff} top10main={top10main} setTop10Main={setTop10Main}/>
                     <p className='text-center all-games'>Current Number of Games Available: {allgamecount}</p>
                 </div>
-                :<p className='text-center text-light'>Loading...</p>
-            }
+
             {
                 (isHovered===true&&top10main.length > 1)
                 ?<div className='hovered-content' id='hovered-content'>

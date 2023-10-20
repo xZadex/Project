@@ -17,13 +17,12 @@ const Info = ({ handleHoverOn, handleHoverOff, setTop10Main }) => {
         twitchList: null,
     });
     
-    // axios.defaults.withCredentials = true;
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [topGamesResponse, allGamesResponse] = await Promise.all([
-                    axios('https://steame-backend.onrender.com/getTop100'),
-                    axios('https://steame-backend.onrender.com/getAllGames'),
+                    axios(`${process.env.REACT_APP_BACKEND}/getTop100`),
+                    axios(`${process.env.REACT_APP_BACKEND}/getAllGames`),
                 ]);
 
                 const filteredTopGames = topGamesResponse.data.response.ranks.filter(list => list.appid !== 431960);
