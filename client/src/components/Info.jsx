@@ -16,8 +16,11 @@ const Info = ({ handleHoverOn, handleHoverOff, setTop10Main }) => {
         gameSelected: false,
         twitchList: null,
     });
-    
+    const [onMobile, setOnMobile] = useState(window.innerWidth < 768);
+
+
     useEffect(() => {
+
         const fetchData = async () => {
             try {
                 const [topGamesResponse, allGamesResponse] = await Promise.all([
@@ -168,8 +171,12 @@ const Info = ({ handleHoverOn, handleHoverOff, setTop10Main }) => {
             {
                 topgames?.map((game, i) => {
                     return (
-                        <div key={i} className="box text-center" onClick={(event) => handleClick(event, i)} onMouseEnter={(event) => { handleHoverOn(event, i); setTop10Main(topgames) }} onMouseLeave={(event) => handleHoverOff(event, i)} style={{ color: `rgb(255,255,255)`, width: "1000px", height: 0.00060 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
-                    )
+
+                            (onMobile)?
+                            <div key={i} className="box text-center" onClick={(event) => handleClick(event, i)} onMouseEnter={(event) => { handleHoverOn(event, i); setTop10Main(topgames) }} onMouseLeave={(event) => handleHoverOff(event, i)} style={{ color: `rgb(255,255,255)`, width: "1000px", height: 0.00019 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
+                            :
+                            <div key={i} className="box text-center" onClick={(event) => handleClick(event, i)} onMouseEnter={(event) => { handleHoverOn(event, i); setTop10Main(topgames) }} onMouseLeave={(event) => handleHoverOff(event, i)} style={{ color: `rgb(255,255,255)`, width: "1000px", height: 0.00060 * game.concurrent_in_game, fontSize: 0.00015 * game.concurrent_in_game, backgroundColor: `rgb(0,${15 * game.rank},${30 * game.rank})` }}></div>
+                        )
                 })
             }
         </div>

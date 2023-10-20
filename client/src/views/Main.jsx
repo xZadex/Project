@@ -12,9 +12,10 @@ const Main = () => {
         concurrent_in_game: "",
         rank: ""
     })
-    const [top10main, setTop10Main] = useState([])
+    const [top10main, setTop10Main] = useState([]);
 
     useEffect(() => {
+
         const fetchData = () => {
             axios(`${process.env.REACT_APP_BACKEND}/getAllGames`)
                 .then((res) => {
@@ -70,7 +71,7 @@ const Main = () => {
                     <div className={`loading-screen`}></div>
             }
 
-            <div>
+            <div className='steam-logo-container'>
                 <div className='glow'></div>
                 <Info handleHoverOn={handleHoverOn} handleHoverOff={handleHoverOff} top10main={top10main} setTop10Main={setTop10Main} />
                 <p className='text-center all-games'>Current Number of Games Available: {allgamecount}</p>
