@@ -227,8 +227,7 @@ body {
   to { transform: rotate(1turn)}
 }
 
-
-@media screen and (max-width: 425px) {
+@media only screen and (max-width: 425px) {
 
   html{
     width: 100vw;
