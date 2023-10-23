@@ -55,6 +55,9 @@ const Info = ({ handleHoverOn, handleHoverOff, setTop10Main }) => {
     const handleClick = (event, i) => {
         // console.log(topgames);
         // Rest of the handleClick function
+
+
+
         let url = ""
         if (topgames.length > 0 && topgames[i].name) {
             let stringName = topgames[i].name
